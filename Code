@@ -4,7 +4,7 @@
 pci_id=$(lspci | grep Ethernet | awk '{print $1})
 
 # Create a file with the PCI ID in the name
-filename="$(pci_id)_information.csv
+filename="$(pci_id)_information.csv"
 
 while true; do
   # read the sensor data
