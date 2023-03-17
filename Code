@@ -1,7 +1,7 @@
 #/!bin/bash
 
 # get the PCI ID of the network adapter
-pci_id=$(lspci | grep Ethernet | awk '{print $1})
+pci_id=$(lspci | grep Ethernet | awk '{print $1}')
 
 # Create a file with the PCI ID in the name
 filename="${pci_id}_information.csv"
