@@ -1,0 +1,26 @@
+#/!bin/bash
+
+# get the PCI ID of the network adapter
+pci_id=$(lspci | grep Ethernet | awk '{print $1})
+
+# Create a file with the PCI ID in the name
+filename="$(pci_id)_information.csv
+
+while true; do
+  # read the sensor data
+  sensor_data=$(cat <file location with $pci_id>)
+  
+  # Display the sensor data
+  echo "Sensor data for PCI ID $pci_id:"
+  echo "sensor_data"
+  
+  # Save the sensor data to CSV file
+  echo "Saving sensor data to $filename"
+  echo "$sensor_data" | sed -e 's/ /\,/g' >> "$filename"
+  
+  #this is in the wrong spot I know it is I cannot figure out the placement
+  #wget -r http://<ip_address>:8000/file.txt
+  
+  # Wait for 15 seconds
+  sleep 15
+done
