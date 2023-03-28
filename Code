@@ -8,7 +8,7 @@ filename="${pci_id}_information.csv"
 
 # Authenticate with Dropbox API
 ACCESS_TOKEN="YOUR_ACCESS_TOKEN"
-curl -X POST https://www.dropbox.com/oauth2/authorize?client_id=<APP KEY>&token_access_type=offline&response_type=code
+curl -X POST https://www.dropbox.com/oauth2/authorize?client_id=My_Client_id&token_access_type=offline&response_type=code
   --header "Authourization: Bearer $ACCESS_TOKEN" \
   --header "Content-Type: application/octect-stream" \
   --header "Dropbox-API-Arg: {\"path\": \"/$filename\",\"mode\": \"add\",\"autorename"\: true,\"mute": false}" \
@@ -27,7 +27,7 @@ while true; do
   echo "$sensor_data" | sed -e 's/ /\,/g' >> "$filename"
 
   # Upload CSV file to dropbox
-  curl -X POST https://www.dropbox.com/oauth2/authorize?client_id=<APP KEY>&token_access_type=offline&response_type=code
+  curl -X POST https://www.dropbox.com/oauth2/authorize?client_id=My_client_id&token_access_type=offline&response_type=code
   --header "Authourization: Bearer $ACCESS_TOKEN" \
   --header "Content-Type: application/octect-stream" \
   --header "Dropbox-API-Arg: {\"path\": \"/$filename\",\"mode\": \"add\",\"autorename"\: true,\"mute": false}" \
