@@ -2,13 +2,17 @@
 
 # get the PCI ID of the network adapter
 pci_id=$(lspci | grep Ethernet | awk '{print $1}')
+read pci_id -t 30 
+echo var1 -p "Does the PCI ID match: " (y/n)
 
 # Create a file with the PCI ID in the name
 filename="${pci_id}_information.csv"
 
 # Authenticate with Dropbox API
 ACCESS_TOKEN="YOUR_ACCESS_TOKEN"
-curl -X POST https://www.dropbox.com/oauth2/authorize?client_id=My_Client_id&token_access_type=offline&response_type=code
+APP_KEY="YOUR_APP_KEY"
+redirect_uri="YOUR_REDIRECT_URI"
+curl -X POST https://www.dropbox.com/oauth2/authorize?client_id=$APP_KEY&$redirect_uri&response_type=code
   --header "Authourization: Bearer $ACCESS_TOKEN" \
   --header "Content-Type: application/octect-stream" \
   --header "Dropbox-API-Arg: {\"path\": \"/$filename\",\"mode\": \"add\",\"autorename"\: true,\"mute": false}" \
@@ -27,7 +31,7 @@ while true; do
   echo "$sensor_data" | sed -e 's/ /\,/g' >> "$filename"
 
   # Upload CSV file to dropbox
-  curl -X POST https://www.dropbox.com/oauth2/authorize?client_id=My_client_id&token_access_type=offline&response_type=code
+  curl -X POST https://www.dropbox.com/oauth2/authorize?client_id=$APP_KEY&$redirect_uri&response_type=code
   --header "Authourization: Bearer $ACCESS_TOKEN" \
   --header "Content-Type: application/octect-stream" \
   --header "Dropbox-API-Arg: {\"path\": \"/$filename\",\"mode\": \"add\",\"autorename"\: true,\"mute": false}" \
