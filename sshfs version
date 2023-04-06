@@ -1,0 +1,32 @@
+#/!bin/bash
+
+# get the PCI ID of the network adapter
+pci_id=$(lspci | grep Ethernet | awk '{print $1}')
+read pci_id -t 30 
+echo var1 -p "Does the PCI ID match: " (y/n)
+
+# Create a file with the PCI ID in the name
+filename="${pci_id}_information.csv"
+
+# Mount the file via SSHFS
+mkdir /my_remote_directory
+sshfs user@remote_host:/remote_directory ~/my_remote_mount
+
+while true; do
+  # read the sensor data
+  sensor_data=$(cat <file location with $pci_id>)
+  
+  # Display the sensor data
+  echo "Sensor data for PCI ID $pci_id:"
+  echo "sensor_data"
+  
+  # Save the sensor data to CSV file
+  echo "Saving sensor data to $filename"
+  echo "$sensor_data" | sed -e 's/ /\,/g' >> "/my_remote_mount/$filename"
+  
+  # Wait for 15 seconds
+  sleep 15
+done
+
+#Unmount te file system
+fusermount -u ~/my_remote_mount
